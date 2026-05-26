@@ -1,5 +1,767 @@
 [
-
-
-
+{
+  "dns" : {
+    "disableCache" : false,
+    "disableFallback" : false,
+    "disableFallbackIfMatch" : true,
+    "enableParallelQuery" : false,
+    "queryStrategy" : "UseIPv4",
+    "serveExpiredTTL" : 0,
+    "servers" : [
+      {
+        "address" : "https:\/\/1.1.1.1\/dns-query",
+        "timeoutMs" : 1000,
+        "unexpectedIPs" : [
+          "geoip:ru"
+        ]
+      },
+      {
+        "address" : "udp+local:\/\/77.88.8.8",
+        "domain" : [
+          "geosite:category-direct",
+          "geosite:category-ru"
+        ],
+        "timeoutMs" : 1000
+      }
+    ],
+    "serveStale" : true,
+    "tag" : "dns-in",
+    "useSystemHosts" : false
+  },
+  "inbounds" : [
+    {
+      "listen" : "127.0.0.1",
+      "port" : 10808,
+      "protocol" : "socks",
+      "settings" : {
+        "auth" : "noauth",
+        "udp" : true
+      },
+      "sniffing" : {
+        "destOverride" : [
+          "http",
+          "tls",
+          "quic"
+        ],
+        "enabled" : true,
+        "routeOnly" : false
+      },
+      "tag" : "socks"
+    },
+    {
+      "listen" : "127.0.0.1",
+      "port" : 10809,
+      "protocol" : "http",
+      "settings" : {
+        "allowTransparent" : false
+      },
+      "sniffing" : {
+        "destOverride" : [
+          "http",
+          "tls",
+          "quic"
+        ],
+        "enabled" : true,
+        "routeOnly" : false
+      },
+      "tag" : "http"
+    }
+  ],
+  "log" : {
+    "access" : "\/private\/var\/mobile\/Containers\/Shared\/AppGroup\/14FD47D3-0100-4DE2-8F05-5E92E427EEC1\/Library\/Application Support\/Xray\/logs\/access.log",
+    "dnsLog" : true,
+    "loglevel" : "Warning"
+  },
+  "observatory" : {
+    "enableConcurrency" : true,
+    "probeInterval" : "30m",
+    "probeUrl" : "http:\/\/cp.cloudflare.com\/generate_204",
+    "subjectSelector" : [
+      "proxy-"
+    ]
+  },
+  "outbounds" : [
+    {
+      "mux" : {
+        "concurrency" : 8,
+        "enabled" : true,
+        "xudpConcurrency" : 16,
+        "xudpProxyUDP443" : "skip"
+      },
+      "protocol" : "vless",
+      "settings" : {
+        "vnext" : [
+          {
+            "address" : "194.238.79.150.fwqfw783rg2dad.website",
+            "port" : 443,
+            "users" : [
+              {
+                "encryption" : "none",
+                "flow" : "",
+                "id" : "af40145a-e477-4df9-ad3a-7eae545b5f1f"
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings" : {
+        "network" : "ws",
+        "security" : "tls",
+        "sockopt" : {
+          "happyEyeballs" : {
+            "interleave" : 1,
+            "maxConcurrentTry" : 4,
+            "prioritizeIPv6" : false,
+            "tryDelayMs" : 250
+          },
+          "tcpcongestion" : "bbr",
+          "tcpFastOpen" : true
+        },
+        "tlsSettings" : {
+          "alpn" : [
+            "h2"
+          ],
+          "fingerprint" : "edge",
+          "serverName" : "194.238.79.150.fwqfw783rg2dad.website"
+        },
+        "wsSettings" : {
+          "headers" : {
+            "Host" : ""
+          },
+          "heartbeatPeriod" : 10,
+          "path" : "\/sequre\/ws?ed=2560"
+        }
+      },
+      "tag" : "proxy"
+    },
+    {
+      "mux" : {
+        "concurrency" : 8,
+        "enabled" : true,
+        "xudpConcurrency" : 16,
+        "xudpProxyUDP443" : "skip"
+      },
+      "protocol" : "vless",
+      "settings" : {
+        "vnext" : [
+          {
+            "address" : "s9.cloudflare.ips-list.vhub.pro",
+            "port" : 443,
+            "users" : [
+              {
+                "encryption" : "none",
+                "flow" : "",
+                "id" : "af40145a-e477-4df9-ad3a-7eae545b5f1f"
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings" : {
+        "network" : "ws",
+        "security" : "tls",
+        "sockopt" : {
+          "happyEyeballs" : {
+            "interleave" : 1,
+            "maxConcurrentTry" : 4,
+            "prioritizeIPv6" : false,
+            "tryDelayMs" : 250
+          },
+          "tcpcongestion" : "bbr",
+          "tcpFastOpen" : true
+        },
+        "tlsSettings" : {
+          "allowInsecure" : true,
+          "alpn" : [
+            "http\/1.1"
+          ],
+          "fingerprint" : "chrome",
+          "serverName" : "cloudflare.vhub.pro"
+        },
+        "wsSettings" : {
+          "headers" : {
+            "Host" : "cloudflare.vhub.pro"
+          },
+          "heartbeatPeriod" : 10,
+          "path" : "\/sequre\/ws?ed=2560"
+        }
+      },
+      "tag" : "proxy-2"
+    },
+    {
+      "mux" : {
+        "concurrency" : 8,
+        "enabled" : true,
+        "xudpConcurrency" : 16,
+        "xudpProxyUDP443" : "skip"
+      },
+      "protocol" : "vless",
+      "settings" : {
+        "vnext" : [
+          {
+            "address" : "s10.cloudflare.ips-list.vhub.pro",
+            "port" : 443,
+            "users" : [
+              {
+                "encryption" : "none",
+                "flow" : "",
+                "id" : "af40145a-e477-4df9-ad3a-7eae545b5f1f"
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings" : {
+        "network" : "ws",
+        "security" : "tls",
+        "sockopt" : {
+          "happyEyeballs" : {
+            "interleave" : 1,
+            "maxConcurrentTry" : 4,
+            "prioritizeIPv6" : false,
+            "tryDelayMs" : 250
+          },
+          "tcpcongestion" : "bbr",
+          "tcpFastOpen" : true
+        },
+        "tlsSettings" : {
+          "allowInsecure" : true,
+          "alpn" : [
+            "http\/1.1"
+          ],
+          "fingerprint" : "chrome",
+          "serverName" : "cloudflare.vhub.pro"
+        },
+        "wsSettings" : {
+          "headers" : {
+            "Host" : "cloudflare.vhub.pro"
+          },
+          "heartbeatPeriod" : 10,
+          "path" : "\/sequre\/ws?ed=2560"
+        }
+      },
+      "tag" : "proxy-3"
+    },
+    {
+      "mux" : {
+        "concurrency" : 8,
+        "enabled" : true,
+        "xudpConcurrency" : 16,
+        "xudpProxyUDP443" : "skip"
+      },
+      "protocol" : "vless",
+      "settings" : {
+        "vnext" : [
+          {
+            "address" : "s1.cloudflare.ips-list.vhub.pro",
+            "port" : 443,
+            "users" : [
+              {
+                "encryption" : "none",
+                "flow" : "",
+                "id" : "af40145a-e477-4df9-ad3a-7eae545b5f1f"
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings" : {
+        "network" : "ws",
+        "security" : "tls",
+        "sockopt" : {
+          "happyEyeballs" : {
+            "interleave" : 1,
+            "maxConcurrentTry" : 4,
+            "prioritizeIPv6" : false,
+            "tryDelayMs" : 250
+          },
+          "tcpcongestion" : "bbr",
+          "tcpFastOpen" : true
+        },
+        "tlsSettings" : {
+          "allowInsecure" : true,
+          "alpn" : [
+            "http\/1.1"
+          ],
+          "fingerprint" : "chrome",
+          "serverName" : "cloudflare.vhub.pro"
+        },
+        "wsSettings" : {
+          "headers" : {
+            "Host" : "cloudflare.vhub.pro"
+          },
+          "heartbeatPeriod" : 10,
+          "path" : "\/sequre\/ws?ed=2560"
+        }
+      },
+      "tag" : "proxy-4"
+    },
+    {
+      "mux" : {
+        "concurrency" : 8,
+        "enabled" : true,
+        "xudpConcurrency" : 16,
+        "xudpProxyUDP443" : "skip"
+      },
+      "protocol" : "vless",
+      "settings" : {
+        "vnext" : [
+          {
+            "address" : "s2.cloudflare.ips-list.vhub.pro",
+            "port" : 443,
+            "users" : [
+              {
+                "encryption" : "none",
+                "flow" : "",
+                "id" : "af40145a-e477-4df9-ad3a-7eae545b5f1f"
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings" : {
+        "network" : "ws",
+        "security" : "tls",
+        "sockopt" : {
+          "happyEyeballs" : {
+            "interleave" : 1,
+            "maxConcurrentTry" : 4,
+            "prioritizeIPv6" : false,
+            "tryDelayMs" : 250
+          },
+          "tcpcongestion" : "bbr",
+          "tcpFastOpen" : true
+        },
+        "tlsSettings" : {
+          "allowInsecure" : true,
+          "alpn" : [
+            "http\/1.1"
+          ],
+          "fingerprint" : "chrome",
+          "serverName" : "cloudflare.vhub.pro"
+        },
+        "wsSettings" : {
+          "headers" : {
+            "Host" : "cloudflare.vhub.pro"
+          },
+          "heartbeatPeriod" : 10,
+          "path" : "\/sequre\/ws?ed=2560"
+        }
+      },
+      "tag" : "proxy-5"
+    },
+    {
+      "mux" : {
+        "concurrency" : 8,
+        "enabled" : true,
+        "xudpConcurrency" : 16,
+        "xudpProxyUDP443" : "skip"
+      },
+      "protocol" : "vless",
+      "settings" : {
+        "vnext" : [
+          {
+            "address" : "s3.cloudflare.ips-list.vhub.pro",
+            "port" : 443,
+            "users" : [
+              {
+                "encryption" : "none",
+                "flow" : "",
+                "id" : "af40145a-e477-4df9-ad3a-7eae545b5f1f"
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings" : {
+        "network" : "ws",
+        "security" : "tls",
+        "sockopt" : {
+          "happyEyeballs" : {
+            "interleave" : 1,
+            "maxConcurrentTry" : 4,
+            "prioritizeIPv6" : false,
+            "tryDelayMs" : 250
+          },
+          "tcpcongestion" : "bbr",
+          "tcpFastOpen" : true
+        },
+        "tlsSettings" : {
+          "allowInsecure" : true,
+          "alpn" : [
+            "http\/1.1"
+          ],
+          "fingerprint" : "chrome",
+          "serverName" : "cloudflare.vhub.pro"
+        },
+        "wsSettings" : {
+          "headers" : {
+            "Host" : "cloudflare.vhub.pro"
+          },
+          "heartbeatPeriod" : 10,
+          "path" : "\/sequre\/ws?ed=2560"
+        }
+      },
+      "tag" : "proxy-6"
+    },
+    {
+      "mux" : {
+        "concurrency" : 8,
+        "enabled" : true,
+        "xudpConcurrency" : 16,
+        "xudpProxyUDP443" : "skip"
+      },
+      "protocol" : "vless",
+      "settings" : {
+        "vnext" : [
+          {
+            "address" : "s4.cloudflare.ips-list.vhub.pro",
+            "port" : 443,
+            "users" : [
+              {
+                "encryption" : "none",
+                "flow" : "",
+                "id" : "af40145a-e477-4df9-ad3a-7eae545b5f1f"
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings" : {
+        "network" : "ws",
+        "security" : "tls",
+        "sockopt" : {
+          "happyEyeballs" : {
+            "interleave" : 1,
+            "maxConcurrentTry" : 4,
+            "prioritizeIPv6" : false,
+            "tryDelayMs" : 250
+          },
+          "tcpcongestion" : "bbr",
+          "tcpFastOpen" : true
+        },
+        "tlsSettings" : {
+          "allowInsecure" : true,
+          "alpn" : [
+            "http\/1.1"
+          ],
+          "fingerprint" : "chrome",
+          "serverName" : "cloudflare.vhub.pro"
+        },
+        "wsSettings" : {
+          "headers" : {
+            "Host" : "cloudflare.vhub.pro"
+          },
+          "heartbeatPeriod" : 10,
+          "path" : "\/sequre\/ws?ed=2560"
+        }
+      },
+      "tag" : "proxy-7"
+    },
+    {
+      "mux" : {
+        "concurrency" : 8,
+        "enabled" : true,
+        "xudpConcurrency" : 16,
+        "xudpProxyUDP443" : "skip"
+      },
+      "protocol" : "vless",
+      "settings" : {
+        "vnext" : [
+          {
+            "address" : "s5.cloudflare.ips-list.vhub.pro",
+            "port" : 443,
+            "users" : [
+              {
+                "encryption" : "none",
+                "flow" : "",
+                "id" : "af40145a-e477-4df9-ad3a-7eae545b5f1f"
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings" : {
+        "network" : "ws",
+        "security" : "tls",
+        "sockopt" : {
+          "happyEyeballs" : {
+            "interleave" : 1,
+            "maxConcurrentTry" : 4,
+            "prioritizeIPv6" : false,
+            "tryDelayMs" : 250
+          },
+          "tcpcongestion" : "bbr",
+          "tcpFastOpen" : true
+        },
+        "tlsSettings" : {
+          "allowInsecure" : true,
+          "alpn" : [
+            "http\/1.1"
+          ],
+          "fingerprint" : "chrome",
+          "serverName" : "cloudflare.vhub.pro"
+        },
+        "wsSettings" : {
+          "headers" : {
+            "Host" : "cloudflare.vhub.pro"
+          },
+          "heartbeatPeriod" : 10,
+          "path" : "\/sequre\/ws?ed=2560"
+        }
+      },
+      "tag" : "proxy-8"
+    },
+    {
+      "mux" : {
+        "concurrency" : 8,
+        "enabled" : true,
+        "xudpConcurrency" : 16,
+        "xudpProxyUDP443" : "skip"
+      },
+      "protocol" : "vless",
+      "settings" : {
+        "vnext" : [
+          {
+            "address" : "s6.cloudflare.ips-list.vhub.pro",
+            "port" : 443,
+            "users" : [
+              {
+                "encryption" : "none",
+                "flow" : "",
+                "id" : "af40145a-e477-4df9-ad3a-7eae545b5f1f"
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings" : {
+        "network" : "ws",
+        "security" : "tls",
+        "sockopt" : {
+          "happyEyeballs" : {
+            "interleave" : 1,
+            "maxConcurrentTry" : 4,
+            "prioritizeIPv6" : false,
+            "tryDelayMs" : 250
+          },
+          "tcpcongestion" : "bbr",
+          "tcpFastOpen" : true
+        },
+        "tlsSettings" : {
+          "allowInsecure" : true,
+          "alpn" : [
+            "http\/1.1"
+          ],
+          "fingerprint" : "chrome",
+          "serverName" : "cloudflare.vhub.pro"
+        },
+        "wsSettings" : {
+          "headers" : {
+            "Host" : "cloudflare.vhub.pro"
+          },
+          "heartbeatPeriod" : 10,
+          "path" : "\/sequre\/ws?ed=2560"
+        }
+      },
+      "tag" : "proxy-9"
+    },
+    {
+      "mux" : {
+        "concurrency" : 8,
+        "enabled" : true,
+        "xudpConcurrency" : 16,
+        "xudpProxyUDP443" : "skip"
+      },
+      "protocol" : "vless",
+      "settings" : {
+        "vnext" : [
+          {
+            "address" : "s7.cloudflare.ips-list.vhub.pro",
+            "port" : 443,
+            "users" : [
+              {
+                "encryption" : "none",
+                "flow" : "",
+                "id" : "af40145a-e477-4df9-ad3a-7eae545b5f1f"
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings" : {
+        "network" : "ws",
+        "security" : "tls",
+        "sockopt" : {
+          "happyEyeballs" : {
+            "interleave" : 1,
+            "maxConcurrentTry" : 4,
+            "prioritizeIPv6" : false,
+            "tryDelayMs" : 250
+          },
+          "tcpcongestion" : "bbr",
+          "tcpFastOpen" : true
+        },
+        "tlsSettings" : {
+          "allowInsecure" : true,
+          "alpn" : [
+            "http\/1.1"
+          ],
+          "fingerprint" : "chrome",
+          "serverName" : "cloudflare.vhub.pro"
+        },
+        "wsSettings" : {
+          "headers" : {
+            "Host" : "cloudflare.vhub.pro"
+          },
+          "heartbeatPeriod" : 10,
+          "path" : "\/sequre\/ws?ed=2560"
+        }
+      },
+      "tag" : "proxy-10"
+    },
+    {
+      "mux" : {
+        "concurrency" : 8,
+        "enabled" : true,
+        "xudpConcurrency" : 16,
+        "xudpProxyUDP443" : "skip"
+      },
+      "protocol" : "vless",
+      "settings" : {
+        "vnext" : [
+          {
+            "address" : "s8.cloudflare.ips-list.vhub.pro",
+            "port" : 443,
+            "users" : [
+              {
+                "encryption" : "none",
+                "flow" : "",
+                "id" : "af40145a-e477-4df9-ad3a-7eae545b5f1f"
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings" : {
+        "network" : "ws",
+        "security" : "tls",
+        "sockopt" : {
+          "happyEyeballs" : {
+            "interleave" : 1,
+            "maxConcurrentTry" : 4,
+            "prioritizeIPv6" : false,
+            "tryDelayMs" : 250
+          },
+          "tcpcongestion" : "bbr",
+          "tcpFastOpen" : true
+        },
+        "tlsSettings" : {
+          "allowInsecure" : true,
+          "alpn" : [
+            "http\/1.1"
+          ],
+          "fingerprint" : "chrome",
+          "serverName" : "cloudflare.vhub.pro"
+        },
+        "wsSettings" : {
+          "headers" : {
+            "Host" : "cloudflare.vhub.pro"
+          },
+          "heartbeatPeriod" : 10,
+          "path" : "\/sequre\/ws?ed=2560"
+        }
+      },
+      "tag" : "proxy-11"
+    },
+    {
+      "protocol" : "blackhole",
+      "tag" : "block"
+    },
+    {
+      "protocol" : "freedom",
+      "tag" : "direct"
+    },
+    {
+      "protocol" : "freedom",
+      "settings" : {
+        "fragment" : {
+          "interval" : "5-10",
+          "length" : "10-20",
+          "packets" : "tlshello"
+        }
+      },
+      "tag" : "direct-fragment"
+    }
+  ],
+  "policy" : {
+    "levels" : {
+      "0" : {
+        "bufferSize" : 8,
+        "connIdle" : 30,
+        "downlinkOnly" : 2,
+        "handshake" : 8,
+        "uplinkOnly" : 2
+      }
+    }
+  },
+  "remarks" : "🇩🇪 Германия",
+  "routing" : {
+    "balancers" : [
+      {
+        "fallbackTag" : "proxy",
+        "selector" : [
+          "proxy-"
+        ],
+        "strategy" : {
+          "type" : "leastLoad"
+        },
+        "tag" : "BalPing"
+      }
+    ],
+    "domainMatcher" : "hybrid",
+    "domainStrategy" : "IPIfNonMatch",
+    "rules" : [
+      {
+        "outboundTag" : "direct",
+        "port" : "22,25,135-139,465,587,593,2525,3306,3389,5432,6379,11211,1900"
+      },
+      {
+        "domain" : [
+          "geosite:category-block"
+        ],
+        "outboundTag" : "block",
+        "type" : "field"
+      },
+      {
+        "balancerTag" : "BalPing",
+        "domain" : [
+          "geosite:category-proxy"
+        ],
+        "type" : "field"
+      },
+      {
+        "domain" : [
+          "geosite:category-direct",
+          "geosite:category-ru"
+        ],
+        "outboundTag" : "direct",
+        "type" : "field"
+      },
+      {
+        "ip" : [
+          "geoip:private",
+          "geoip:ru"
+        ],
+        "outboundTag" : "direct",
+        "type" : "field"
+      },
+      {
+        "balancerTag" : "BalPing",
+        "network" : "tcp,udp",
+        "type" : "field"
+      }
+    ]
+  }
+}
 ]
