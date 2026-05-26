@@ -1,5 +1,199 @@
 [
-
-
-
+{
+  "dns" : {
+    "disableCache" : false,
+    "disableFallback" : false,
+    "disableFallbackIfMatch" : true,
+    "enableParallelQuery" : false,
+    "queryStrategy" : "UseIPv4",
+    "serveExpiredTTL" : 0,
+    "servers" : [
+      {
+        "address" : "https:\/\/1.1.1.1\/dns-query",
+        "timeoutMs" : 1000,
+        "unexpectedIPs" : [
+          "geoip:ru"
+        ]
+      },
+      {
+        "address" : "udp+local:\/\/77.88.8.8",
+        "domain" : [
+          "geosite:category-direct",
+          "geosite:category-ru"
+        ],
+        "timeoutMs" : 1000
+      }
+    ],
+    "serveStale" : true,
+    "tag" : "dns-in",
+    "useSystemHosts" : false
+  },
+  "inbounds" : [
+    {
+      "listen" : "127.0.0.1",
+      "port" : 10808,
+      "protocol" : "socks",
+      "settings" : {
+        "auth" : "noauth",
+        "udp" : true
+      },
+      "sniffing" : {
+        "destOverride" : [
+          "http",
+          "tls",
+          "quic"
+        ],
+        "enabled" : true,
+        "routeOnly" : false
+      },
+      "tag" : "socks"
+    },
+    {
+      "listen" : "127.0.0.1",
+      "port" : 10809,
+      "protocol" : "http",
+      "settings" : {
+        "allowTransparent" : false
+      },
+      "sniffing" : {
+        "destOverride" : [
+          "http",
+          "tls",
+          "quic"
+        ],
+        "enabled" : true,
+        "routeOnly" : false
+      },
+      "tag" : "http"
+    }
+  ],
+  "log" : {
+    "access" : "\/private\/var\/mobile\/Containers\/Shared\/AppGroup\/14FD47D3-0100-4DE2-8F05-5E92E427EEC1\/Library\/Application Support\/Xray\/logs\/access.log",
+    "dnsLog" : true,
+    "loglevel" : "Warning"
+  },
+  "outbounds" : [
+    {
+      "mux" : {
+        "concurrency" : 8,
+        "enabled" : true,
+        "xudpConcurrency" : 16,
+        "xudpProxyUDP443" : "skip"
+      },
+      "protocol" : "vless",
+      "settings" : {
+        "vnext" : [
+          {
+            "address" : "194.58.41.88.fwqfw783rg2dad.website",
+            "port" : 443,
+            "users" : [
+              {
+                "encryption" : "none",
+                "flow" : "",
+                "id" : "af40145a-e477-554b-ad3a-7eae545b5f1f"
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings" : {
+        "network" : "ws",
+        "security" : "tls",
+        "sockopt" : {
+          "happyEyeballs" : {
+            "interleave" : 1,
+            "maxConcurrentTry" : 4,
+            "prioritizeIPv6" : false,
+            "tryDelayMs" : 250
+          },
+          "tcpcongestion" : "bbr",
+          "tcpFastOpen" : true
+        },
+        "tlsSettings" : {
+          "fingerprint" : "chrome",
+          "serverName" : "194.58.41.88.fwqfw783rg2dad.website"
+        },
+        "wsSettings" : {
+          "headers" : {
+            "Host" : "194.58.41.88.fwqfw783rg2dad.website"
+          },
+          "heartbeatPeriod" : 10,
+          "path" : "\/sequre\/ws?ed=2560"
+        }
+      },
+      "tag" : "proxy"
+    },
+    {
+      "protocol" : "freedom",
+      "tag" : "direct"
+    },
+    {
+      "protocol" : "freedom",
+      "settings" : {
+        "fragment" : {
+          "interval" : "5-10",
+          "length" : "10-20",
+          "packets" : "tlshello"
+        }
+      },
+      "tag" : "direct-fragment"
+    },
+    {
+      "protocol" : "blackhole",
+      "tag" : "block"
+    }
+  ],
+  "policy" : {
+    "levels" : {
+      "0" : {
+        "bufferSize" : 8,
+        "connIdle" : 30,
+        "downlinkOnly" : 2,
+        "handshake" : 8,
+        "uplinkOnly" : 2
+      }
+    }
+  },
+  "remarks" : "🇬🇧 Великобритания",
+  "routing" : {
+    "domainMatcher" : "hybrid",
+    "domainStrategy" : "IPIfNonMatch",
+    "rules" : [
+      {
+        "outboundTag" : "direct",
+        "port" : "22,25,135-139,465,587,593,2525,3306,3389,5432,6379,11211,1900"
+      },
+      {
+        "domain" : [
+          "geosite:category-proxy"
+        ],
+        "outboundTag" : "proxy",
+        "type" : "field"
+      },
+      {
+        "domain" : [
+          "geosite:category-block"
+        ],
+        "outboundTag" : "block",
+        "type" : "field"
+      },
+      {
+        "domain" : [
+          "geosite:category-direct",
+          "geosite:category-ru"
+        ],
+        "outboundTag" : "direct",
+        "type" : "field"
+      },
+      {
+        "ip" : [
+          "geoip:private",
+          "geoip:ru"
+        ],
+        "outboundTag" : "direct",
+        "type" : "field"
+      }
+    ]
+  }
+}
 ]
