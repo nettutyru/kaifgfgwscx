@@ -1,5 +1,184 @@
 [
-
-
-
+{
+  "dns" : {
+    "disableCache" : false,
+    "disableFallback" : false,
+    "disableFallbackIfMatch" : true,
+    "enableParallelQuery" : false,
+    "queryStrategy" : "UseIPv4",
+    "serveExpiredTTL" : 0,
+    "servers" : [
+      {
+        "address" : "https:\/\/1.1.1.1\/dns-query",
+        "timeoutMs" : 1000,
+        "unexpectedIPs" : [
+          "geoip:ru"
+        ]
+      },
+      {
+        "address" : "udp+local:\/\/77.88.8.8",
+        "domain" : [
+          "geosite:category-direct",
+          "geosite:category-ru"
+        ],
+        "timeoutMs" : 1000
+      }
+    ],
+    "serveStale" : true,
+    "tag" : "dns-in",
+    "useSystemHosts" : false
+  },
+  "inbounds" : [
+    {
+      "listen" : "127.0.0.1",
+      "port" : 10808,
+      "protocol" : "socks",
+      "settings" : {
+        "auth" : "noauth",
+        "udp" : true
+      },
+      "sniffing" : {
+        "destOverride" : [
+          "http",
+          "tls",
+          "quic"
+        ],
+        "enabled" : true,
+        "routeOnly" : false
+      },
+      "tag" : "socks"
+    },
+    {
+      "listen" : "127.0.0.1",
+      "port" : 10809,
+      "protocol" : "http",
+      "settings" : {
+        "allowTransparent" : false
+      },
+      "sniffing" : {
+        "destOverride" : [
+          "http",
+          "tls",
+          "quic"
+        ],
+        "enabled" : true,
+        "routeOnly" : false
+      },
+      "tag" : "http"
+    }
+  ],
+  "log" : {
+    "access" : "\/private\/var\/mobile\/Containers\/Shared\/AppGroup\/14FD47D3-0100-4DE2-8F05-5E92E427EEC1\/Library\/Application Support\/Xray\/logs\/access.log",
+    "dnsLog" : true,
+    "loglevel" : "Warning"
+  },
+  "outbounds" : [
+    {
+      "protocol" : "vless",
+      "settings" : {
+        "vnext" : [
+          {
+            "address" : "91.239.23.180",
+            "port" : 443,
+            "users" : [
+              {
+                "encryption" : "none",
+                "flow" : "",
+                "id" : "af40145a-e477-4df9-ad3a-7eae545b5f1f"
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings" : {
+        "grpcSettings" : {
+          "authority" : "dl.k8s.io",
+          "mode" : false,
+          "serviceName" : "xraygrpc"
+        },
+        "network" : "grpc",
+        "realitySettings" : {
+          "fingerprint" : "safari",
+          "publicKey" : "54hbwVG2QOq8hXR77roi2ZrKWPMK3Um3ZnagioywoDk",
+          "serverName" : "dl.k8s.io",
+          "shortId" : "bdf1e772522d1d5a",
+          "spiderX" : "\/js\/bundle.js"
+        },
+        "security" : "reality"
+      },
+      "tag" : "proxy"
+    },
+    {
+      "protocol" : "freedom",
+      "tag" : "direct"
+    },
+    {
+      "protocol" : "freedom",
+      "settings" : {
+        "fragment" : {
+          "interval" : "5-10",
+          "length" : "10-20",
+          "packets" : "tlshello"
+        }
+      },
+      "tag" : "direct-fragment"
+    },
+    {
+      "protocol" : "blackhole",
+      "tag" : "block"
+    }
+  ],
+  "policy" : {
+    "levels" : {
+      "0" : {
+        "bufferSize" : 8,
+        "connIdle" : 30,
+        "downlinkOnly" : 2,
+        "handshake" : 8,
+        "uplinkOnly" : 2
+      }
+    }
+  },
+  "remarks" : "🇱🇻 Латвия",
+  "routing" : {
+    "domainMatcher" : "hybrid",
+    "domainStrategy" : "IPIfNonMatch",
+    "rules" : [
+      {
+        "outboundTag" : "direct",
+        "port" : "22,25,135-139,465,587,593,2525,3306,3389,5432,6379,11211,1900"
+      },
+      {
+        "domain" : [
+          "geosite:category-proxy"
+        ],
+        "outboundTag" : "proxy",
+        "type" : "field"
+      },
+      {
+        "domain" : [
+          "geosite:category-block"
+        ],
+        "outboundTag" : "block",
+        "type" : "field"
+      },
+      {
+        "domain" : [
+          "geosite:category-direct",
+          "geosite:category-ru"
+        ],
+        "outboundTag" : "direct",
+        "type" : "field"
+      },
+      {
+        "ip" : [
+          "geoip:private",
+          "geoip:ru"
+        ],
+        "outboundTag" : "direct",
+        "type" : "field"
+      }
+    ]
+  }
+}
 ]
