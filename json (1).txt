@@ -1,4 +1,3 @@
-[
 {
   "dns" : {
     "disableCache" : false,
@@ -675,245 +674,6 @@
       "tag" : "proxy-11"
     },
     {
-      "mux" : {
-        "concurrency" : 8,
-        "enabled" : true,
-        "xudpConcurrency" : 16,
-        "xudpProxyUDP443" : "skip"
-      },
-      "protocol" : "vless",
-      "settings" : {
-        "vnext" : [
-          {
-            "address" : "193.178.226.46.tyr-agentstvo.tech",
-            "port" : 443,
-            "users" : [
-              {
-                "encryption" : "none",
-                "flow" : "",
-                "id" : "af40145a-e477-4df9-ad3a-7eae545b5f1f"
-              }
-            ]
-          }
-        ]
-      },
-      "streamSettings" : {
-        "network" : "ws",
-        "security" : "tls",
-        "sockopt" : {
-          "happyEyeballs" : {
-            "interleave" : 1,
-            "maxConcurrentTry" : 4,
-            "prioritizeIPv6" : false,
-            "tryDelayMs" : 250
-          },
-          "tcpcongestion" : "bbr",
-          "tcpFastOpen" : true
-        },
-        "tlsSettings" : {
-          "alpn" : [
-            "h2"
-          ],
-          "fingerprint" : "firefox",
-          "serverName" : "193.178.226.46.tyr-agentstvo.tech"
-        },
-        "wsSettings" : {
-          "headers" : {
-            "Host" : ""
-          },
-          "heartbeatPeriod" : 10,
-          "path" : "\/sequre\/ws?ed=2560"
-        }
-      },
-      "tag" : "proxy-12"
-    },
-    {
-      "protocol" : "vless",
-      "settings" : {
-        "vnext" : [
-          {
-            "address" : "95.85.246.14.speed-storage.ru",
-            "port" : 573,
-            "users" : [
-              {
-                "encryption" : "none",
-                "flow" : "",
-                "id" : "af40145a-e477-4df9-ad3a-7eae545b5f1f"
-              }
-            ]
-          }
-        ]
-      },
-      "streamSettings" : {
-        "grpcSettings" : {
-          "authority" : "",
-          "mode" : false,
-          "serviceName" : "\/sequre\/grpc\/"
-        },
-        "network" : "grpc",
-        "security" : "tls",
-        "sockopt" : {
-          "happyEyeballs" : {
-            "interleave" : 1,
-            "maxConcurrentTry" : 4,
-            "prioritizeIPv6" : false,
-            "tryDelayMs" : 250
-          },
-          "tcpcongestion" : "bbr",
-          "tcpFastOpen" : true
-        },
-        "tlsSettings" : {
-          "alpn" : [
-            "h2"
-          ],
-          "fingerprint" : "safari",
-          "serverName" : "95.85.246.14.speed-storage.ru"
-        }
-      },
-      "tag" : "proxy-13"
-    },
-    {
-      "protocol" : "vless",
-      "settings" : {
-        "vnext" : [
-          {
-            "address" : "95.85.246.16.speed-storage.ru",
-            "port" : 573,
-            "users" : [
-              {
-                "encryption" : "none",
-                "flow" : "",
-                "id" : "af40145a-e477-4df9-ad3a-7eae545b5f1f"
-              }
-            ]
-          }
-        ]
-      },
-      "streamSettings" : {
-        "grpcSettings" : {
-          "authority" : "",
-          "mode" : false,
-          "serviceName" : "\/sequre\/grpc\/"
-        },
-        "network" : "grpc",
-        "security" : "tls",
-        "sockopt" : {
-          "happyEyeballs" : {
-            "interleave" : 1,
-            "maxConcurrentTry" : 4,
-            "prioritizeIPv6" : false,
-            "tryDelayMs" : 250
-          },
-          "tcpcongestion" : "bbr",
-          "tcpFastOpen" : true
-        },
-        "tlsSettings" : {
-          "alpn" : [
-            "h2"
-          ],
-          "fingerprint" : "safari",
-          "serverName" : "95.85.246.16.speed-storage.ru"
-        }
-      },
-      "tag" : "proxy-14"
-    },
-    {
-      "mux" : {
-        "enabled" : false
-      },
-      "protocol" : "vless",
-      "settings" : {
-        "vnext" : [
-          {
-            "address" : "78.17.100.107.blanesik.space",
-            "port" : 443,
-            "users" : [
-              {
-                "encryption" : "none",
-                "flow" : "",
-                "id" : "af40145a-e477-4df9-ad3a-7eae545b5f1f"
-              }
-            ]
-          }
-        ]
-      },
-      "streamSettings" : {
-        "grpcSettings" : {
-          "authority" : "grpc.vhub.pro",
-          "mode" : false,
-          "serviceName" : "\/sequre\/grpc"
-        },
-        "network" : "grpc",
-        "security" : "tls",
-        "sockopt" : {
-          "happyEyeballs" : {
-            "interleave" : 1,
-            "maxConcurrentTry" : 4,
-            "prioritizeIPv6" : false,
-            "tryDelayMs" : 250
-          },
-          "tcpcongestion" : "bbr",
-          "tcpFastOpen" : true
-        },
-        "tlsSettings" : {
-          "alpn" : [
-            "h2"
-          ],
-          "fingerprint" : "chrome",
-          "serverName" : "78.17.100.107.blanesik.space"
-        }
-      },
-      "tag" : "proxy-15"
-    },
-    {
-      "mux" : {
-        "enabled" : false
-      },
-      "protocol" : "vless",
-      "settings" : {
-        "vnext" : [
-          {
-            "address" : "89.125.118.171.blanesik.space",
-            "port" : 443,
-            "users" : [
-              {
-                "encryption" : "none",
-                "flow" : "",
-                "id" : "af40145a-e477-4df9-ad3a-7eae545b5f1f"
-              }
-            ]
-          }
-        ]
-      },
-      "streamSettings" : {
-        "grpcSettings" : {
-          "authority" : "grpc.vhub.pro",
-          "mode" : false,
-          "serviceName" : "\/sequre\/grpc"
-        },
-        "network" : "grpc",
-        "security" : "tls",
-        "sockopt" : {
-          "happyEyeballs" : {
-            "interleave" : 1,
-            "maxConcurrentTry" : 4,
-            "prioritizeIPv6" : false,
-            "tryDelayMs" : 250
-          },
-          "tcpcongestion" : "bbr",
-          "tcpFastOpen" : true
-        },
-        "tlsSettings" : {
-          "alpn" : [
-            "h2"
-          ],
-          "fingerprint" : "chrome",
-          "serverName" : "89.125.118.171.blanesik.space"
-        }
-      },
-      "tag" : "proxy-16"
-    },
-    {
       "protocol" : "blackhole",
       "tag" : "block"
     },
@@ -944,7 +704,7 @@
       }
     }
   },
-  "remarks" : "🇪🇺 AUTO — Самый быстрый ⚡️",
+  "remarks" : "🇩🇪 Германия",
   "routing" : {
     "balancers" : [
       {
@@ -953,9 +713,6 @@
           "proxy-"
         ],
         "strategy" : {
-          "settings" : {
-            "expected" : 1
-          },
           "type" : "leastLoad"
         },
         "tag" : "BalPing"
@@ -1006,4 +763,3 @@
     ]
   }
 }
-]
