@@ -1,3 +1,4 @@
+[
 {
   "dns" : {
     "disableCache" : false,
@@ -763,3 +764,4 @@
     ]
   }
 }
+]
